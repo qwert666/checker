@@ -1,7 +1,8 @@
+require 'checker/core_ext'
 require 'checker/cli/execute'
 
 module Checker
-  class Modules; end
+  module Modules; end
 
   class CLI
 

@@ -2,10 +2,12 @@ module Checker
   module Modules
     class Haml
       def self.check
-        files = `git ls-files -- *.haml`.split("\n")
+        files = Utils.files_modified
+        files.delete_if {|f| f.ends_with?(".haml")}
+
         files.each do |f|
           puts "Checking #{f}..."
-          exec("haml --check #{f}")
+          system("haml --check #{f}")
         end
       end
     end

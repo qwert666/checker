@@ -3,12 +3,18 @@ module Checker
     class Haml
       def self.check
         files = Utils.files_modified
-        files.delete_if {|f| f.ends_with?(".haml")}
+        files.delete_if {|f| !f.ends_with?(".haml")}
 
-        files.each do |f|
+        files.map! do |f|
           puts "Checking #{f}..."
-          system("haml --check #{f}")
+          Haml.check_one(f)
         end
+
+        files.all_true?
+      end
+
+      def self.check_one(file)
+        system("haml --check #{file}")
       end
     end
   end

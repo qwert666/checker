@@ -26,12 +26,18 @@ module Checker
 
       module ClassMethods
         def execute
+          if ARGV.size < 2
+            puts "For now only one thing works..."
+            puts "checker check haml"
+            exit 
+          end
           command = ARGV[0]
           which   = ARGV[1]
 
           klass = "Checker::Modules::#{which.capitalize}"
           require "checker/modules/#{which.downcase}"
-          klass.constantize.check
+          
+          exit (klass.constantize.check ? 0 : 1)
         end
       end
     end

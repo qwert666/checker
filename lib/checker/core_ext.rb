@@ -1,3 +1,5 @@
+require 'checker/utils'
+
 class CoreExt
   def self.constantize(camel_cased_word)
     names = camel_cased_word.split('::')
@@ -19,5 +21,11 @@ class String
   def ends_with?(patt)
     patt = Regexp.new(Regexp.escape(patt) + "$")
     self.match patt
+  end
+end
+
+class Array
+  def all_true?
+    self.all? {|o| o == true}
   end
 end

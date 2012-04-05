@@ -34,10 +34,17 @@ module Checker
           command = ARGV[0]
           which   = ARGV[1]
 
-          klass = "Checker::Modules::#{which.capitalize}"
-          require "checker/modules/#{which.downcase}"
+          if which == "all"
+            ['haml', 'ruby'].each do |m|
+              puts "Checking #{m} files..."
+              system("checker check #{m}")
+            end
+          else
+            klass = "Checker::Modules::#{which.capitalize}"
+            require "checker/modules/#{which.downcase}"
           
-          exit (klass.constantize.check ? 0 : 1)
+            exit (klass.constantize.check ? 0 : 1)
+          end
         end
       end
     end
